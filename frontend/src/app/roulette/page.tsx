@@ -1,26 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import RouletteWheel from "@/components/RouletteWheel";
 import { useRouletteStore } from "@/stores/rouletteStore";
-import { destinations } from "@/lib/destinations";
 
 export default function RoulettePage() {
   const router = useRouter();
   const [isSpinning, setIsSpinning] = useState(false);
   const [finalIndex, setFinalIndex] = useState<number | null>(null);
-  const { spin, selectedDestination } = useRouletteStore();
+  const { spin } = useRouletteStore();
 
   const handleSpin = () => {
     if (isSpinning) return;
 
     setIsSpinning(true);
-    spin();
 
-    const randomIndex = Math.floor(Math.random() * destinations.length);
-    setFinalIndex(randomIndex);
+    // spin()이 선택된 인덱스를 반환하고 스토어에 저장
+    const selectedIndex = spin();
+    setFinalIndex(selectedIndex);
 
     setTimeout(() => {
       setIsSpinning(false);

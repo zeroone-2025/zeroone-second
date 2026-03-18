@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { destinations } from "@/lib/destinations";
 
 interface RouletteWheelProps {
@@ -20,63 +19,69 @@ export default function RouletteWheel({ isSpinning, finalIndex }: RouletteWheelP
     : 0;
 
   const colors = [
-    "bg-red-500",
-    "bg-orange-500",
-    "bg-yellow-500",
-    "bg-green-500",
-    "bg-teal-500",
-    "bg-blue-500",
-    "bg-indigo-500",
-    "bg-purple-500",
+    "#ef4444", // red
+    "#f97316", // orange
+    "#eab308", // yellow
+    "#22c55e", // green
+    "#14b8a6", // teal
+    "#3b82f6", // blue
+    "#6366f1", // indigo
+    "#a855f7", // purple
   ];
 
   return (
     <div className="relative w-72 h-72 md:w-96 md:h-96">
       {/* Pointer */}
-      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+      <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-20">
         <div className="w-0 h-0 border-l-[20px] border-r-[20px] border-t-[30px] border-l-transparent border-r-transparent border-t-yellow-400 drop-shadow-lg" />
       </div>
 
       {/* Wheel */}
       <div
-        className="w-full h-full rounded-full overflow-hidden shadow-2xl border-8 border-yellow-400"
+        className="w-full h-full rounded-full shadow-2xl border-8 border-yellow-400 relative"
         style={{
+          background: `conic-gradient(
+            ${colors.map((color, i) =>
+              `${color} ${i * segmentAngle}deg ${(i + 1) * segmentAngle}deg`
+            ).join(", ")}
+          )`,
           transform: `rotate(${rotation}deg)`,
           transition: isSpinning ? "transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99)" : "none",
         }}
       >
+        {/* Labels */}
         {destinations.map((dest, index) => {
-          const angle = index * segmentAngle;
+          const angle = index * segmentAngle + segmentAngle / 2;
+          const radian = (angle - 90) * (Math.PI / 180);
+          const radius = 38; // percentage from center
+          const x = 50 + radius * Math.cos(radian);
+          const y = 50 + radius * Math.sin(radian);
+
           return (
             <div
               key={dest.name}
-              className={`absolute w-full h-full ${colors[index]}`}
+              className="absolute flex flex-col items-center justify-center"
               style={{
-                clipPath: `polygon(50% 50%, 50% 0%, ${50 + 50 * Math.tan((segmentAngle * Math.PI) / 180)}% 0%, 50% 50%)`,
-                transform: `rotate(${angle}deg)`,
-                transformOrigin: "50% 50%",
+                left: `${x}%`,
+                top: `${y}%`,
+                transform: `translate(-50%, -50%) rotate(${angle}deg)`,
               }}
             >
-              <div
-                className="absolute text-white font-bold text-sm md:text-base"
-                style={{
-                  top: "15%",
-                  left: "50%",
-                  transform: `translateX(-50%) rotate(${segmentAngle / 2}deg)`,
-                  textShadow: "1px 1px 2px rgba(0,0,0,0.5)",
-                }}
+              <span className="text-xl md:text-2xl drop-shadow-md">{dest.emoji}</span>
+              <span
+                className="text-[10px] md:text-xs font-bold text-white mt-0.5"
+                style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.8)" }}
               >
-                <div className="text-2xl md:text-3xl">{dest.emoji}</div>
-                <div className="mt-1">{dest.name}</div>
-              </div>
+                {dest.name}
+              </span>
             </div>
           );
         })}
       </div>
 
       {/* Center circle */}
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 md:w-20 md:h-20 bg-white rounded-full shadow-lg flex items-center justify-center">
-        <span className="text-2xl md:text-3xl">🎯</span>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-14 h-14 md:w-16 md:h-16 bg-white rounded-full shadow-lg flex items-center justify-center z-10">
+        <span className="text-xl md:text-2xl">🎯</span>
       </div>
     </div>
   );
