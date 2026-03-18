@@ -47,7 +47,7 @@ export default function Home() {
         }}
       >
         <span className="flex flex-col items-center gap-2">
-          <span>오늘 안 간다</span>
+          <span>오늘 걍 짼다</span>
           <span className="text-4xl">🚨</span>
         </span>
       </Button>
