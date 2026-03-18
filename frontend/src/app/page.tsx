@@ -62,7 +62,7 @@ export default function Home() {
       </div>
 
       <footer className="absolute bottom-8 text-center text-gray-500 text-sm px-4">
-        <p>⚠️ 이 서비스를 사용한 결과에 대해 책임지지 않습니다</p>
+        <p>자체휴강하고 어디갈까요??</p>
       </footer>
 
       <style jsx>{`
