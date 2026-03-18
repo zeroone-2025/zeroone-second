@@ -12,7 +12,7 @@ export default function ResultPage() {
   const { selectedDestination, selectedExcuse, reset } = useRouletteStore();
   const [showConfetti, setShowConfetti] = useState(true);
   const [startTime, setStartTime] = useState("10");
-  const [showTimeline, setShowTimeline] = useState(false);
+  const [showTimeline, setShowTimeline] = useState(true);
   const [adjustedTimeline, setAdjustedTimeline] = useState<TimelineItem[]>([]);
 
   useEffect(() => {
