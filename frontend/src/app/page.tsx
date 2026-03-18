@@ -48,7 +48,6 @@ export default function Home() {
       >
         <span className="flex flex-col items-center gap-2">
           <span>오늘 걍 짼다</span>
-          <span className="text-4xl">🚨</span>
         </span>
       </Button>
 
@@ -57,7 +56,7 @@ export default function Home() {
           오늘 <span className="text-4xl font-bold">{fakeCount.toLocaleString()}</span>명이
         </p>
         <p className="text-xl md:text-2xl text-yellow-400">
-          함께 자체휴강했습니다
+          함께 자체휴강했습니다 같이 자체휴강 할 사람?
         </p>
       </div>
 
